@@ -1,3 +1,35 @@
-.card-img-top{
-    width: 40%;
+.cards{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2%;
+    justify-content: space-around;
+}
+
+.cardDiv{
+    background-color: rgba(235, 230, 230, 0.815);
+    width: 20%;
+    height: 200%;
+    border-radius: 5px;
+    border: 0.4px solid rgb(190, 190, 190);
+    box-shadow: 2px 10px 20px 3px rgba(0,0,0,0.68);
+}
+
+.cardImg > img{
+    width: 100%;
+    height: 100%;
+}
+
+.cardText{
+    padding: 3%;
+    color: rgb(83, 83, 83);
+}
+.cardText > h3{
+    background-color: rgb(209, 205, 205);
+    border-radius: 10px;
+    padding: 2%;
+    color: white;
+    font-weight: bold;
+}
+.cardText>button{
+    width: 100%;
 }
