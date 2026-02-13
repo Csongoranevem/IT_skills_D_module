@@ -72,7 +72,7 @@
         <div class="modal-body">
           
             <div class="modalContainer">
-                     <div class="ChatFal">
+                     <div class="ChatFal" id="ChatFal">
                          <div class="AIChat">
                              <h6 class="AIName  ChatNames">AI pajtás</h6>
                             <p class="AIMessage">Ezt az AI üzeni!
@@ -100,14 +100,14 @@
 
                     <div class="UserChat">
                         <h6 class="UserName ChatNames">Username</h6>
-                            <p class="UserMessage">Ezt a User üzeni!
+                        <p class="UserMessage">Ezt a User üzeni!
                                 Halihó, tehát, hogy
                                 Beló!
                                 <br>
                                 Na csá!
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus nihil, voluptate officiis enim deleniti atque repellendus quam aut corrupti quibusdam! Et mollitia pariatur a voluptas reiciendis laboriosam illum, recusandae obcaecati.
-                            </p>
-                        </div>
+                        </p>
+                    </div>
                 
                 </div>
 
@@ -118,14 +118,14 @@
         <div class="modalChat">
             <form>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Üzenet küldése</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="exampleInputEmail1" class="form-label" >Üzenet küldése</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Szia, tudnál segíteni?" name="UserMessage" [(ngModel)]="UserMessage">
                 </div>
             </form>
-            <button class="btn btn-sm btn-primary">Küldés <i class="bi bi-send"></i></button>
+            <button class="btn btn-sm btn-primary" (click)="sendMessage()">Küldés <i class="bi bi-send"></i></button>
         </div>
         <div class="modal-footer">
-
+          <button type="button" class="btn btn-success" (click)="newChat()">Új Chat</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
         </div>
       </div>

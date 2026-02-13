@@ -91,12 +91,14 @@ i{
     padding-left: 2%;
     overflow: auto;
     float: right;
+    min-width: 20%
 }
 .UserMessage{
     background-color: rgb(48, 112, 70);
     box-shadow: 1px 3px 5px 5px rgb(22, 22, 22);
     border-radius: 10px;
     padding: 2.8%;
+    min-width: 20%
 }
 .ChatFal{
     display: flex;
