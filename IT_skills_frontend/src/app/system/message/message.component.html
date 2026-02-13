@@ -1,0 +1,3 @@
+<div *ngIf="message" class="alert border-{{message.severity}} alert-dismissible fade show" role="alert">
+  <strong><i class="bi {{message.icon}}"></i>&nbsp;&nbsp;{{message.title}}</strong> - {{message.message}}
+</div>
