@@ -9,18 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit{
 
-  footerText:string[]=["2","0","2","6",","," ","M","i","n","d","e","n"," j","o","g"," f","e","n","n","t","a","r","t","v","a"];
+
   ngOnInit(): void {
-      this.getFooterText();
+      this.getFooterText("2026, Minden jog fenntartva!");
   }
 
-   getFooterText(){
-    let FText:any=document.getElementById("footerText");
-    for (let i = 0; i < this.footerText.length; i++) {
-      setTimeout(() => {
-        FText.innerText+=this.footerText[i];
-      }, 1);
-      
-    }
+ getFooterText(szoveg:string){
+  let footerText: any=document.getElementById('footerText');
+  let counter = 0, my_delay = setInterval(() => {
+    if(counter<szoveg.length) footerText.innerHTML += szoveg[counter++];
+    else clearInterval(my_delay);
+}, 60);
+
   }
+
 }
