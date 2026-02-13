@@ -63,20 +63,69 @@
 
     <!-- Modal -->
     <div class="modal fade" id="ChatModal" tabindex="-1" aria-labelledby="ChatModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Csevegés</h1>
+          <h1 class="modal-title fs-2" id="exampleModalLabel">Csevegés</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           
             <div class="modalContainer">
+                     <div class="ChatFal">
+                         <div class="AIChat">
+                             <h6 class="AIName  ChatNames">AI pajtás</h6>
+                            <p class="AIMessage">Ezt az AI üzeni!
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis numquam nisi harum, labore mollitia impedit ut velit dignissimos corrupti optio magni totam quod ipsum temporibus, atque fugit? Ipsum, blanditiis inventore.
+                            </p>
+                         </div>
+
+                    <div class="UserChat">
+                    <h6 class="UserName ChatNames">Username</h6>
+                        <p class="UserMessage">Ezt a User üzeni!
+                            Halihó, tehát, hogy
+                            Beló!
+                            <br>
+                            Na csá!
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus nihil, voluptate officiis enim deleniti atque repellendus quam aut corrupti quibusdam! Et mollitia pariatur a voluptas reiciendis laboriosam illum, recusandae obcaecati.
+                        </p>
+                    </div>
+
+                    <div class="AIChat">
+                        <h6 class="AIName  ChatNames">AI pajtás</h6>
+                        <p class="AIMessage">Ezt az AI üzeni!
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis numquam nisi harum, labore mollitia impedit ut velit dignissimos corrupti optio magni totam quod ipsum temporibus, atque fugit? Ipsum, blanditiis inventore.
+                        </p>
+                    </div>
+
+                    <div class="UserChat">
+                        <h6 class="UserName ChatNames">Username</h6>
+                            <p class="UserMessage">Ezt a User üzeni!
+                                Halihó, tehát, hogy
+                                Beló!
+                                <br>
+                                Na csá!
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus nihil, voluptate officiis enim deleniti atque repellendus quam aut corrupti quibusdam! Et mollitia pariatur a voluptas reiciendis laboriosam illum, recusandae obcaecati.
+                            </p>
+                        </div>
+                
+                </div>
 
             </div>
 
         </div>
+        <hr>
+        <div class="modalChat">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Üzenet küldése</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </form>
+            <button class="btn btn-sm btn-primary">Küldés <i class="bi bi-send"></i></button>
+        </div>
         <div class="modal-footer">
+
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
         </div>
       </div>
