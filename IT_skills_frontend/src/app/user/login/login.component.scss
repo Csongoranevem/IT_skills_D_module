@@ -6,11 +6,29 @@ button{
     display: block;
     margin: 0 auto;
     position: absolute;
+    color: var(--text-color);
+    background-color: transparent;
+    border: solid 1px var(--primary-button-color);
 }
-
 
 button:hover{
-    position: relative;
-    top: 2px;
-    left: 2px;
+    background-color: var(--primary-button-color);
 }
+
+input{
+    background-color: transparent;
+    border: 1px solid var(--primary-input-color);
+    color: var(--text-color);
+}
+
+input[type=checkbox]{
+    background-color: transparent;
+    border: 1px solid var(--text-color);
+
+    
+}
+
+label[for=rememberMe]{
+    color: var(--text-color);
+}
+

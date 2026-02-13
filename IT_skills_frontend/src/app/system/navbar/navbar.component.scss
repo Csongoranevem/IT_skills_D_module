@@ -3,5 +3,9 @@ nav{
     border-radius: 0px 0px 15px 15px;
     text-align: center;
     font-size: larger;
-    
+    background-color: transparent !important;
+    color: white;
+    text-shadow: 0px 0px 5px var(--primary-input-color);
 }
+
+

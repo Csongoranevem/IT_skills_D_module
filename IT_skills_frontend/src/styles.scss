@@ -1,6 +1,29 @@
-body{
-    height: 100vh;
+:root {
+    --primary-input-color: #2196f3;
+    --secondary-input-color: #e4352e;
+    --background-color: #333;
+    --text-color: #fff;
+    --primary-button-color: #2196f3;
+    --secondary-button-color: #e4352e;
+}
 
-    background-size: cover;
+
+body {
+    height: 100vh;
+    background-image: url('assets/main_background.jpg');
+    background-size: contain;
     backdrop-filter: blur(20px);
+}
+
+.navbar-toggler:focus, 
+input:focus, 
+select:focus, 
+textarea:focus, 
+button:focus,
+input[type=checkbox]:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus {
+    outline: none !important;
+    box-shadow: none;
 }
