@@ -1,95 +1,216 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import axios from 'axios';
+import { ApiResponse } from '../interfaces/api.response';
 import { environment } from '../../environments/environment.development';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
 
-  private server = environment.serverUrl;
-  private tokenName = environment.tokenName;
+export class APIService {
 
-  constructor(private http: HttpClient) { }
+  SERVER = environment.serverUrl;
 
-  getToken(): String | null {
-    return sessionStorage.getItem(this.tokenName);
+  constructor() { }
+
+  async sendMail(data: object): Promise<ApiResponse> {
+    try {
+      const res = await axios.post(`${this.SERVER}/sendmail`, data)
+      return {
+        status: 200,
+        message: res.data.message
+      }
+    }
+    catch (err: any) {
+      return {
+        status: 500,
+        message: "Hiba történt az adatok lekéréskor"
+      }
+    }
+  }
+  async getMail(data: object): Promise<ApiResponse> {
+    try {
+      const res = await axios.post(`${this.SERVER}/contact`, data)
+      return {
+        status: 200,
+        message: res.data.message
+      }
+    }
+    catch (err: any) {
+      return {
+        status: 500,
+        message: "Hiba történt az email küldésekor"
+      }
+    }
   }
 
-  tokenHeader():{ headers: HttpHeaders }{
-
-    let token = this.getToken();
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return { headers }
+  async Registration(table: string, data: any) {
+    try {
+      const response = await axios.post(`${this.SERVER}/${table}/registration`, data);
+      return {
+        status: 200,
+        message: 'A regisztráció sikeres! Most már beléphetsz!',
+        data: response.data   // nem kötelező visszaköldeni
+      };
+    } catch (err: any) {
+      return {
+        status: 500,
+        message: err.response.data.error
+      };
+    }
   }
 
-  // PUBLIC ENDPOINTS --------------------------------------------------------------
-
-  registration(table: string, data: object){
-    return this.http.post(`${this.server}/${table}/registration`, data);
+  async Login(username: string, password: string): Promise<ApiResponse> {
+    try {
+      const response = await axios.post(`${this.SERVER}/login`, { email: username, password: password });
+      return {
+        status: 200,
+        data: response.data
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Hibás email vagy jelszó!'
+      };
+    }
   }
 
-  login(table: string, data: object){
-    return this.http.post(`${this.server}/${table}/login`, data);
+  async Upload(formData: FormData): Promise<ApiResponse> {
+    try {
+      const response = await axios.post(`${this.SERVER}/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      return {
+        status: 200,
+        data: response.data
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Nem sikerült a fájl feltöltése!'
+      };
+    }
   }
 
- // lostpass(){}
-
- // restorepass(){}
-
-  readById(table: string, id: string){
-    return this.http.get(`${this.server}/public/${table}/${id}`);
+  async deleteImage(filename: string): Promise<ApiResponse> {
+    try {
+      const response = await axios.delete(`${this.SERVER}/image/${filename}`);
+      return {
+        status: 200,
+        data: response.data
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Nem sikerült a fájl törlése!'
+      };
+    }
   }
 
-  readByField(table: string, field: string, op: string, value: string){
-    return this.http.get(`${this.server}/public/${table}/${field}/${op}/${value}`);
+  // GET ALL record from 'table'  -> GET http://localhost:3000/users
+
+  async SelectAll(table: string): Promise<ApiResponse> {
+    try {
+      const response = await axios.get(`${this.SERVER}/${table}`);
+      return {
+        status: 200,
+        data: response.data
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Hiba történt az adatok elérésekor!'
+      };
+    }
   }
 
-  readAll(table: string){
-    return this.http.get(`${this.server}/public/${table}`);
+  // GET ONE record from 'table' by 'id'  -> GET http://localhost:3000/users/5
+
+  async Select(table: string, id: number): Promise<ApiResponse> {
+    try {
+      const response = await axios.get(`${this.SERVER}/${table}/${id}`);
+      return {
+        status: 200,
+        data: response.data
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Hiba történt az adatok elérésekor!'
+      };
+    }
   }
 
-  sendMail(data: object){
-    return this.http.post(`${this.server}/sendmail`, data);
+  // POST new record to 'table'  -> POST http://localhost:3000/users
+
+  async Insert(table: string, data: any) {
+    try {
+      const response = await axios.post(`${this.SERVER}/${table}`, data);
+      return {
+        status: 200,
+        message: 'A rekord felvéve!',
+        data: response.data   // nem kötelező visszaköldeni
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Hiba történt a művelet során!'
+      };
+    }
   }
 
-  // PRIVATE ENDPOINTS --------------------------------------------------------------
+  // UPDATE record from 'table' by 'id'  -> PATCH http://localhost:3000/users/5
 
-  selectById(table: string, id: string){
-    return this.http.get(`${this.server}/${table}/${id}`, this.tokenHeader());
+  async Update(table: string, id: number, data: any) {
+    try {
+      const response = await axios.patch(`${this.SERVER}/${table}/${id}`, data);
+      return {
+        status: 200,
+        message: 'A rekord módosítva!',
+        data: response.data   // nem kötelező visszaköldeni
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Hiba történt a művelet során!'
+      };
+    }
   }
 
-  selectByField(table: string, field: string, op: string, value: string){
-    return this.http.get(`${this.server}/${table}/${field}/${op}/${value}`, this.tokenHeader());
+  // DELETE ONE record from 'table' by 'id'  -> DELETE http://localhost:3000/users/5
+
+  async Delete(table: string, id: number) {
+    try {
+      const response = await axios.delete(`${this.SERVER}/${table}/${id}`);
+      return {
+        status: 200,
+        message: 'A rekord törölve a táblából!'
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Hiba történt a művelet során!'
+      };
+    }
   }
 
-  selectAll(table: string){
-    return this.http.get(`${this.server}/${table}`, this.tokenHeader());
+  // DELETE ALL!!! record from 'table'  -> DELETE http://localhost:3000/users
+
+  async DeleteAll(table: string) {
+    try {
+      const response = await axios.delete(`${this.SERVER}/${table}`);
+      return {
+        status: 200,
+        message: 'Összes rekord törölve a táblából!'
+      };
+    } catch (error: any) {
+      return {
+        status: 500,
+        message: 'Hiba történt a művelet során!'
+      };
+    }
   }
-
-  insert(table: string, data: object){
-    return this.http.post(`${this.server}/${table}`, data, this.tokenHeader());
-  }
-
-  update(table: string, id: string, data: object){
-    return this.http.patch(`${this.server}/${table}/${id}`, data, this.tokenHeader());
-  }
-
-  delete(table: string, id: string){
-    return this.http.delete(`${this.server}/${table}/${id}`, this.tokenHeader());
-  }
-
-  deleteAll(){}
-
-  uploadFile(){}
-
-  downloadFile(){}
-
-  deleteFile(){}
 
 }

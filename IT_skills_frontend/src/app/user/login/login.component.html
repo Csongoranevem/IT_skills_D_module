@@ -1,16 +1,17 @@
+
+
 <form class="m-auto mt-5 col col col-lg-3 col-md-3 col-sm-6 col-xs-6">
     <h4 class="mx-auto mb-3">Jelentkezz be!</h4>
     <div class="mb-3">
-        <input type="email" class="form-control" id="loginEmail"
-            placeholder="Email">
+        <input type="email" class="form-control" id="loginEmail" placeholder="E-mail" name="Loginemail" [(ngModel)]="email">
     </div>
     <div class="mb-3">
-        <input type="password" class="form-control" id="LoginPw" placeholder="Password">
+        <input type="password" class="form-control" id="LoginPw" placeholder="Jelszó" name="LoginPw" [(ngModel)]="password">
     </div>
     <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="rememberMelabel">
-        <label class="form-check-label" for="rememberMe">Remember me</label>
+        <input type="checkbox" class="form-check-input" id="rememberMelabel" name="rememberMe" [(ngModel)]="rememberMe">
+        <label class="form-check-label" for="rememberMe">Emlékezz rám</label>
     </div>
-        <button type="submit" class="btn btn-primary">Let's go</button>
+        <button type="submit" class="btn btn-primary" (click)="login()">Let's go</button>
 
 </form>
