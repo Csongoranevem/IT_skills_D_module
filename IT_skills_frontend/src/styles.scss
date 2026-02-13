@@ -5,6 +5,24 @@
     --text-color: #fff;
     --primary-button-color: #2196f3;
     --secondary-button-color: #e4352e;
+
+    --inputBorder: rgb(100, 100, 100);
+
+
+}
+
+@keyframes buttonHover {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform:  scale(1.1);
+    }
+
+    100% {
+        transform:  scale(1);
+    }
 }
 
 
@@ -15,10 +33,10 @@ body {
     backdrop-filter: blur(20px);
 }
 
-.navbar-toggler:focus, 
-input:focus, 
-select:focus, 
-textarea:focus, 
+.navbar-toggler:focus,
+input:focus,
+select:focus,
+textarea:focus,
 button:focus,
 input[type=checkbox]:focus,
 input[type=text]:focus,
