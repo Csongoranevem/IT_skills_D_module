@@ -62,16 +62,18 @@ export class APIService {
 
   async Login(username: string, password: string): Promise<ApiResponse> {
     try {
-      const response = await axios.post(`${this.SERVER}/login`, { email: username, password: password });
+      const response = await axios.post(`${this.SERVER}/login`, { username: username, password: password });
       return {
         status: 200,
         data: response.data
       };
+
     } catch (error: any) {
       return {
         status: 500,
         message: 'Hibás email vagy jelszó!'
       };
+
     }
   }
 

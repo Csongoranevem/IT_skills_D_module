@@ -15,8 +15,6 @@ export class NavbarComponent {
     { name: 'Főoldal', link: '/home' },
     { name: 'Kapcsolat', link: '/contact' },
     { name: 'Bejelentkezés', link: '/login' },
-    { name: 'Regisztráció', link: '/register' },
-
   ]
 
 }
