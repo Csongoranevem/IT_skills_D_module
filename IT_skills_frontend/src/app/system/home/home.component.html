@@ -72,60 +72,42 @@
         <div class="modal-body">
           
             <div class="modalContainer">
-                     <div class="ChatFal" id="ChatFal">
-                         <div class="AIChat">
-                             <h6 class="AIName  ChatNames">AI pajtás</h6>
-                            <p class="AIMessage">Ezt az AI üzeni!
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis numquam nisi harum, labore mollitia impedit ut velit dignissimos corrupti optio magni totam quod ipsum temporibus, atque fugit? Ipsum, blanditiis inventore.
-                            </p>
-                         </div>
-
-                    <div class="UserChat">
-                    <h6 class="UserName ChatNames">Username</h6>
-                        <p class="UserMessage">Ezt a User üzeni!
-                            Halihó, tehát, hogy
-                            Beló!
-                            <br>
-                            Na csá!
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus nihil, voluptate officiis enim deleniti atque repellendus quam aut corrupti quibusdam! Et mollitia pariatur a voluptas reiciendis laboriosam illum, recusandae obcaecati.
-                        </p>
+                <div class="container mt-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h4>Chat</h4>
+                      <button class="btn btn-sm btn-outline-light" (click)="newChat()">Új beszélgetés</button>
                     </div>
-
-                    <div class="AIChat">
-                        <h6 class="AIName  ChatNames">AI pajtás</h6>
-                        <p class="AIMessage">Ezt az AI üzeni!
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis numquam nisi harum, labore mollitia impedit ut velit dignissimos corrupti optio magni totam quod ipsum temporibus, atque fugit? Ipsum, blanditiis inventore.
-                        </p>
+                  
+                    <div id="ChatFal" class="chat-wall mb-3">
+                      <div *ngFor="let msg of messages" [ngClass]="msg.sender === 'user' ? 'UserChat' : 'AIChat'">
+                        <h6 [ngClass]="[msg.sender === 'user' ? 'UserName' : 'AIName', 'ChatNames']">{{ msg.name }}</h6>
+                        <p [ngClass]="msg.sender === 'user' ? 'UserMessage' : 'AIMessage'">{{ msg.text }}</p>
+                      </div>
+                      <div *ngIf="isLoading" class="AIChat">
+                        <h6 class="AIName ChatNames">AI pajtás</h6>
+                        <p class="AIMessage"><em>Gondolkodik...</em></p>
+                      </div>
                     </div>
-
-                    <div class="UserChat">
-                        <h6 class="UserName ChatNames">Username</h6>
-                        <p class="UserMessage">Ezt a User üzeni!
-                                Halihó, tehát, hogy
-                                Beló!
-                                <br>
-                                Na csá!
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus nihil, voluptate officiis enim deleniti atque repellendus quam aut corrupti quibusdam! Et mollitia pariatur a voluptas reiciendis laboriosam illum, recusandae obcaecati.
-                        </p>
+                  
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Írj egy üzenetet..."
+                        [(ngModel)]="UserMessage"
+                        (keyup.enter)="sendMessage()"
+                        [disabled]="isLoading"
+                      />
+                      <button class="btn btn-primary" (click)="sendMessage()" [disabled]="isLoading || UserMessage.trim() === ''">
+                        Küldés
+                      </button>
                     </div>
-                
-                </div>
-
+                  </div>
             </div>
 
         </div>
         <hr>
-        <div class="modalChat">
-            <form>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label" >Üzenet küldése</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Szia, tudnál segíteni?" name="UserMessage" [(ngModel)]="UserMessage">
-                </div>
-            </form>
-            <button class="btn btn-sm btn-primary" (click)="sendMessage()">Küldés <i class="bi bi-send"></i></button>
-        </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="newChat()">Új Chat</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
         </div>
       </div>

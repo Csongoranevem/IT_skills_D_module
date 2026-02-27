@@ -28,7 +28,7 @@ export class MessageComponent implements OnInit{
           break;
         }
         case 'warning': {
-          this.message.icon = 'bi-exclamation-triangle-fil';
+          this.message.icon = 'bi-exclamation-triangle-fill';
           break;
         }
         case 'danger': {

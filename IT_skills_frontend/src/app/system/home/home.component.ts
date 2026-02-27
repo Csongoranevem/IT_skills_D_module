@@ -1,63 +1,79 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { APIService } from '../../services/api.service';
+
+interface ChatMessage {
+  sender: 'user' | 'ai';
+  name: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  encapsulation: ViewEncapsulation.None, // Kikapcsolja az izolációt
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   imports: [CommonModule, FormsModule, RouterModule]
 })
-export class HomeComponent {
-  UserMessage: string = "";
+export class HomeComponent implements OnInit {
+  UserMessage: string = '';
+  messages: ChatMessage[] = [];
+  isLoading: boolean = false;
 
-  sendMessage() {
-    if (this.UserMessage == "") {
-      console.log("Üres üzenet!");
-    } else {
-      const ChatFal = document.getElementById("ChatFal");
+  constructor(private api: APIService) {}
 
-      const UserMessageDiv = document.createElement("div");
-      UserMessageDiv.classList.add("UserChat");
+  ngOnInit(): void {
+    this.addAiGreeting();
+  }
 
-      const UserName = document.createElement("h6");
-      UserName.innerHTML = "Username";
-      UserName.classList.add("UserName");
-      UserName.classList.add("ChatNames");
+  private addAiGreeting() {
+    this.messages.push({
+      sender: 'ai',
+      name: 'AI pajtás',
+      text: 'Szia miben segíthetek? 😊 Csak írj nyugodtan, hajrá...'
+    });
+  }
 
-      const UserMessageText = document.createElement("p");
-      UserMessageText.innerHTML = this.UserMessage;
-      UserMessageText.classList.add("UserMessage");
+  async sendMessage() {
+    if (this.UserMessage.trim() === '') {
+      console.log('Üres üzenet!');
+      return;
+    }
 
-      ChatFal!.appendChild(UserMessageDiv);
-      UserMessageDiv.appendChild(UserName);
-      UserMessageDiv.appendChild(UserMessageText);
+    this.messages.push({
+      sender: 'user',
+      name: 'Te',
+      text: this.UserMessage
+    });
 
-      this.UserMessage = "";
+    const userText = this.UserMessage;
+    this.UserMessage = '';
+    this.isLoading = true;
+
+    try {
+      const res = await this.api.sendMail({ message: userText });
+      this.messages.push({
+        sender: 'ai',
+        name: 'AI pajtás',
+        text: res.message || 'Nem érkezett válasz.'
+      });
+    } catch {
+      this.messages.push({
+        sender: 'ai',
+        name: 'AI pajtás',
+        text: 'Hiba történt a válasz lekérésekor.'
+      });
+    } finally {
+      this.isLoading = false;
     }
   }
 
   newChat() {
-    const ChatFal = document.getElementById("ChatFal");
-    ChatFal!.innerHTML = "";
-    const UserMessageDiv = document.createElement("div");
-    UserMessageDiv.classList.add("AIChat");
-
-    const UserName = document.createElement("h6");
-    UserName.innerHTML = "AI pajtás";
-    UserName.classList.add("AIName");
-    UserName.classList.add("ChatNames");
-
-    const UserMessageText = document.createElement("p");
-    UserMessageText.innerHTML = "Szia miben segíthetek? 😊 Csak írj nyugodtan, hajrá.. ÁLLJÁ KI A SZÁMBÓL";
-    UserMessageText.classList.add("AIMessage");
-
-    ChatFal!.appendChild(UserMessageDiv);
-    UserMessageDiv.appendChild(UserName);
-    UserMessageDiv.appendChild(UserMessageText);
-}
+    this.messages = [];
+    this.addAiGreeting();
+  }
 }
 
